@@ -62,3 +62,34 @@ vim.keymap.set('n', '+', function() adjust_font_size(1) end, { noremap = true, s
 
 -- Decrease font size with '-'
 vim.keymap.set('n', '-', function() adjust_font_size(-1) end, { noremap = true, silent = true })
+
+vim.api.nvim_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>', {noremap = true, silent = true})
+
+vim.api.nvim_create_user_command('RestartLSP', function()
+    vim.lsp.stop_client(vim.lsp.get_active_clients())
+    vim.cmd('edit')
+end, {})
+
+vim.api.nvim_create_user_command('GoUpdateWorkspace', function()
+    vim.lsp.buf.execute_command({
+        command = "_typescript.applyWorkspaceEdit",
+        arguments = {
+            {
+                documentChanges = {
+                    {
+                        textDocument = {
+                            uri = vim.uri_from_bufnr(0),
+                            version = nil
+                        },
+                        edits = {}
+                    }
+                }
+            }
+        }
+    })
+end, {})
+
+-- Keybindings for custom commands
+vim.keymap.set('n', '<space>rl', ':RestartLSP<CR>', opts)
+vim.keymap.set('n', '<space>uw', ':GoUpdateWorkspace<CR>', opts)

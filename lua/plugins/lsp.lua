@@ -20,7 +20,6 @@ return {
             {},
             vim.lsp.protocol.make_client_capabilities(),
             cmp_lsp.default_capabilities())
-        
         require("fidget").setup({})
         require("mason").setup()
         require("mason-lspconfig").setup({
@@ -28,7 +27,7 @@ return {
                 "lua_ls",
                 "rust_analyzer",
                 "gopls",
-                "typescript-language-server",  -- Changed to typescript-language-server
+                "ts_ls",
                 "clangd",
             },
             handlers = {
@@ -37,8 +36,6 @@ return {
                         capabilities = capabilities
                     }
                 end,
-                
-                -- Existing handlers
                 zls = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.zls.setup({
@@ -68,13 +65,10 @@ return {
                         }
                     }
                 end,
-                
-                -- Handler for typescript-language-server
-                ["typescript-language-server"] = function()
-                    require("lspconfig").tsserver.setup {
+                ["ts_ls"] = function()
+                    require("lspconfig").ts_ls.setup {
                         capabilities = capabilities,
                         root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
-                        -- You can add any specific settings for TypeScript here
                         settings = {
                             typescript = {
                                 inlayHints = {
@@ -104,18 +98,25 @@ return {
                 ["clangd"] = function()
                     require("lspconfig").clangd.setup {
                         capabilities = capabilities,
-                        -- Add any C/C++-specific settings here
+                        cmd = {
+                            "clangd",
+                            "--header-insertion=never",
+                            "--suggest-missing-includes=false",
+                            "--completion-style=detailed",
+                            "--clang-tidy=false",
+                        },
+                        init_options = {
+                            fallbackFlags = {"-std=c++17"},
+                        },
                     }
                 end,
             }
         })
-        
-        -- Rest of the configuration remains the same
         local cmp_select = { behavior = cmp.SelectBehavior.Select }
         cmp.setup({
             snippet = {
                 expand = function(args)
-                    require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+                    require('luasnip').lsp_expand(args.body)
                 end,
             },
             mapping = cmp.mapping.preset.insert({

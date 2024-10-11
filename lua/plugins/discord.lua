@@ -8,11 +8,11 @@ return {
             main_image          = "language",                 -- "language" or "logo"
             client_id           = "1293307716525228032",      -- Use your own Discord application client id
             log_level           = nil,                        -- Log messages at or above this level
-            debounce_timeout    = 1,                         -- Number of seconds to debounce events
+            debounce_timeout    = 3,                         -- Number of seconds to debounce events
             blacklist           = {},                         -- A list of strings or patterns that disable Rich Presence
             file_assets         = {},                         -- Custom file asset definitions
             show_time           = true,                       -- Show the timer
-            global_timer        = true,                      -- Timer behavior
+            global_timer        = false,                      -- Timer behavior
 
             -- Rich Presence text options
             editing_text        = "Editing %s",               -- Format for editable files
