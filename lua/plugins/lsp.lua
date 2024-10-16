@@ -29,7 +29,6 @@ return {
                 "gopls",
                 "ts_ls",
                 "clangd",
-                "gofumpt",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
