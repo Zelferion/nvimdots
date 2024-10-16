@@ -29,6 +29,7 @@ return {
                 "gopls",
                 "ts_ls",
                 "clangd",
+                "gofumpt",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -65,7 +66,30 @@ return {
                         }
                     }
                 end,
-                ["ts_ls"] = function()
+                ["gopls"] = function()
+                    require('lspconfig').gopls.setup{
+                        capabilities = capabilities,
+                        settings = {
+                            gopls = {
+                                analyses = {
+                                    unusedparams = true,
+                                },
+                                staticcheck = true,
+                                gofumpt = true,
+                            },
+                        },
+                        on_attach = function(client, bufnr)
+                            -- Enable formatting on save
+                            vim.api.nvim_create_autocmd("BufWritePre", {
+                                group = vim.api.nvim_create_augroup("GoFormat", {}),
+                                buffer = bufnr,
+                                callback = function()
+                                    vim.lsp.buf.format({ async = false })
+                                end,
+                            })
+                        end,
+                    }
+                end,                ["ts_ls"] = function()
                     require("lspconfig").ts_ls.setup {
                         capabilities = capabilities,
                         root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
