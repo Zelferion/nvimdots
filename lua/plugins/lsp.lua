@@ -16,10 +16,10 @@ return {
         local cmp = require('cmp')
         local cmp_lsp = require("cmp_nvim_lsp")
         local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities())
+        "force",
+        {},
+        vim.lsp.protocol.make_client_capabilities(),
+        cmp_lsp.default_capabilities())
         require("fidget").setup({})
         require("mason").setup()
         require("mason-lspconfig").setup({
@@ -29,7 +29,6 @@ return {
                 "gopls",
                 "ts_ls",
                 "clangd",
-                "gofumpt",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -89,7 +88,8 @@ return {
                             })
                         end,
                     }
-                end,                ["ts_ls"] = function()
+                end,
+                ["ts_ls"] = function()
                     require("lspconfig").ts_ls.setup {
                         capabilities = capabilities,
                         root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
