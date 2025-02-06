@@ -3,22 +3,6 @@ return {
   config = function()
     require('lualine').setup {
       options = {
-          theme = {
-              normal = {
-                  a = { fg = '#ded6ff', bg = '#4d3cc9' }, -- Latte
-                  b = { fg = '#ded6ff', bg = '#4d3cc9' },
-                  c = { fg = '#ded6ff', bg = '#1e1e2e' }, -- Dark background
-              },
-              insert = { a = { fg = '#ded6ff', bg = '#a6e3a1' } }, -- Macchiato
-              visual = { a = { fg = '#ded6ff', bg = '#f9e2af' } }, -- Frappe
-              replace = { a = { fg = '#ded6ff', bg = '#f28fbd' } }, -- Mocha
-              command = { a = { fg = '#ded6ff', bg = '#4d3cc9' } }, -- Latte
-              inactive = {
-                  a = { fg = '#c9c9c9', bg = '#1e1e2e' },
-                  b = { fg = '#c9c9c9', bg = '#1e1e2e' },
-                  c = { fg = '#c9c9c9', bg = '#1e1e2e' },
-              },
-          },
         section_separators = '',
         component_separators = '',
         icons_enabled = true,

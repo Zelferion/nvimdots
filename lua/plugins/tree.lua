@@ -27,36 +27,6 @@ return {
     })
 
     -- Define highlights in a protected call
-    local function set_highlights()
-      local bg_color = "#1e1e2e"
-      local fg_color = "#ded6ff"
-      local inactive_fg = "#c9c9c9"
-      
-      local highlights = {
-        NeoTreeNormal = { bg = bg_color, fg = fg_color },
-        NeoTreeNormalNC = { bg = bg_color, fg = inactive_fg },
-        NeoTreeStatusLine = { bg = bg_color, fg = fg_color },
-        NeoTreeStatusLineNC = { bg = bg_color, fg = inactive_fg },
-        NeoTreeTabActive = { bg = bg_color, fg = fg_color, bold = true },
-        NeoTreeTabInactive = { bg = bg_color, fg = inactive_fg },
-        NeoTreeTabSeparatorActive = { bg = bg_color, fg = fg_color },
-        NeoTreeTabSeparatorInactive = { bg = bg_color, fg = inactive_fg },
-        NeoTreeModified = { fg = "#f9e2af" },
-        NeoTreeFileName = { bg = bg_color },
-        NeoTreeFileIcon = { bg = bg_color },
-        NeoTreeFloatBorder = { bg = bg_color },
-        NeoTreeFloatTitle = { bg = bg_color },
-        NeoTreeTitleBar = { bg = bg_color },
-      }
-
-      for group, colors in pairs(highlights) do
-        vim.api.nvim_set_hl(0, group, colors)
-      end
-    end
-
-    -- Set up highlights safely
-    pcall(set_highlights)
-
     -- Set up keymaps with descriptive opts
     local keymap_opts = {
       silent = true,

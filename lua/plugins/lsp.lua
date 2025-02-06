@@ -29,6 +29,8 @@ return {
                 "gopls",
                 "ts_ls",
                 "clangd",
+                "zls",
+                "templ",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
@@ -63,6 +65,13 @@ return {
                                 }
                             }
                         }
+                    }
+                end,
+                ["templ"] = function()
+                    local lspconfig = require("lspconfig")
+                    lspconfig.templ.setup {
+                        on_attach = on_attach,
+                        capabilities = capabilities,
                     }
                 end,
                 ["gopls"] = function()
