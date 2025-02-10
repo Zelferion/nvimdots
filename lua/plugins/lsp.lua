@@ -1,7 +1,7 @@
 return {
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        event = "VeryLazy",
         dependencies = {
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
@@ -12,17 +12,15 @@ return {
                 ensure_installed = {
                     "lua_ls",
                     "pyright",
-                    "tsserver",
+                    "ts_ls",
                     "rust_analyzer",
                 },
                 automatic_installation = true,
             })
 
             local lspconfig = require("lspconfig")
-            -- Only set up gd keybinding
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
 
-            -- Special setup for lua_ls to disable semantic tokens
             require("mason-lspconfig").setup_handlers({
                 ["lua_ls"] = function()
                     lspconfig.lua_ls.setup({
@@ -33,7 +31,7 @@ return {
                                 },
                                 diagnostics = {
                                     globals = {
-                                        "vim",         -- Neovim's API
+                                        "vim",
                                         "assert",
                                         "bit",
                                         "debug",
@@ -51,7 +49,6 @@ return {
                         }
                     })
                 end,
-                -- Default handler for other servers
                 function(server_name)
                     if server_name ~= "lua_ls" then
                         lspconfig[server_name].setup({})
